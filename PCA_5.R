@@ -1,17 +1,25 @@
-# This code is edited from  Steve Pittard code available at https://raw.githubusercontent.com/steviep42/BB_phys_stats_ex1.R 
+# This code is edited from  Steve Pittard code available at https://github.com/steviep42/youtube/blob/master/YOUTUBE.DIR/BB_phys_stats_ex1.R 
 library(calibrate)
 setwd("C:/Users/amr01007778867/Desktop")
-my.classes <- read.csv("t_reg_only.csv") 
+my.classes <- read.delim("t_reg_only.txt")
+head(my.classes)
+
+my.classes2=my.classes[,c(1,2)]
+rownames(my.classes2) <- NULL
+my.classes=my.classes2
+plot(my.classes,cex=0.9,col="blue",main="Plot of 1st 2 samples")
+
 # Scale the data
 standardize <- function(x) {(x - mean(x))}
 my.scaled.classes <- apply(my.classes,2,function(x) (x-mean(x)))
-my.scaled.classes
+head(my.scaled.classes)
+plot(my.scaled.classes,cex=0.9,col="blue",main="Plot of 1st 2 samples",sub="Mean Scaled")
 
 # Find Eigen values of covariance matrix
 
 my.cov <- cov(my.scaled.classes)
 my.eigen <- eigen(my.cov)
-rownames(my.eigen$vectors) <- c("Physics","Stats")
+rownames(my.eigen$vectors) <- c("1st sample","2nd sample")
 colnames(my.eigen$vectors) <- c("PC1","PC")
 # Note that the sum of the eigen values equals the total variance of the data
 
@@ -30,8 +38,8 @@ pc2.slope <- my.eigen$vectors[1,2]/my.eigen$vectors[2,2]
 abline(0,pc1.slope,col="red")
 abline(0,pc2.slope,col="green")
 
-textxy(12,10,"(-0.710,-0.695)",cx=0.9,dcol="red")
-textxy(-12,10,"(0.695,-0.719)",cx=0.9,dcol="green")
+#textxy(12,10,"(-0.710,-0.695)",cx=0.9,dcol="red")
+#textxy(-12,10,"(0.695,-0.719)",cx=0.9,dcol="green")
 
 # See how much variation each eigenvector accounts for
 
@@ -46,7 +54,7 @@ scores <- my.scaled.classes %*% loadings
 sd <- sqrt(my.eigen$values)
 rownames(loadings) = colnames(my.classes)
 
-plot(scores,ylim=c(-10,10),main="Data in terms of EigenVectors / PCs",xlab=xlab,ylab=ylab)
+plot(scores,main="Data in terms of EigenVectors / PCs",xlab=xlab,ylab=ylab)
 abline(0,0,col="red")
 abline(0,90,col="green")
 
@@ -58,7 +66,7 @@ scores.max <- max(scores[,1:2])
 plot(scores[,1]/sd[1],scores[,2]/sd[2],main="My First BiPlot",xlab=xlab,ylab=ylab,type="n")
 rownames(scores)=seq(1:nrow(scores))
 abline(0,0,col="red")
-abline(0,90,col="green")
+abline(0,90.0,col="green")
 
 # This is to make the size of the lines more apparent
 factor <- 5
