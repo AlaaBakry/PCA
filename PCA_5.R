@@ -1,5 +1,5 @@
 # this is written on R version 3.4.3 
-#PCA is done without normalization and transformation in this script
+#PCA is done without transformation in this script
 # reading the data
 setwd("C:/Users/amr01007778867/Desktop")
 TregData  <- read.delim("t_reg_only.txt")
