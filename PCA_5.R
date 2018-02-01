@@ -8,7 +8,7 @@ head(TregData )
 TregData <- TregData[,-c(1,1)] # the first variable is string
 mean <- apply(TregData,2,mean) # data is normalized
 st.dev <- apply(TregData,2,sd)
-# data is normalized so no need for normalization
+TregData <- scale (TregData,mean,st.dev)
 #in PCA We can Obtain the Eigenvectors and Eigenvalues from the covariance matrix (eigenvalue decomposition),or perform SVD like here
 princo <- prcomp(TregData[,-1], center=TRUE, scale=TRUE)
 summary(princo)
