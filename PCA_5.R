@@ -4,6 +4,11 @@
 setwd("C:/Users/amr01007778867/Desktop")
 TregData  <- read.delim("t_reg_only.txt")
 head(TregData )
+#normalization 
+TregData <- TregData[,-c(1,1)] # the first variable is string
+mean <- apply(TregData,2,mean) # data is normalized
+st.dev <- apply(TregData,2,sd)
+# data is normalized so no need for normalization
 #in PCA We can Obtain the Eigenvectors and Eigenvalues from the covariance matrix (eigenvalue decomposition),or perform SVD like here
 princo <- prcomp(TregData[,-1], center=TRUE, scale=TRUE)
 summary(princo)
