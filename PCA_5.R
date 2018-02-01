@@ -1,4 +1,5 @@
 # this is written on R version 3.4.3 
+# testing with the git web
 #PCA is done without transformation "not sure" in this script as we need to keep unwanted variation to analyze seperately as it stabilizes variance.
 # reading the data
 setwd("C:/Users/amr01007778867/Desktop")
