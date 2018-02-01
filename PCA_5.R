@@ -16,9 +16,10 @@ screeplot(princo, main="Scree Plot", type="line" )
 
 # draw the BiPloT of PCs to assure
 biplot(princo)
+# construct the projection matrix W from  the first 2 eigenvectors 
+W=TregData[,c(1,2)]
+rownames(W) <- NULL
+plot(W,cex=0.9,col="blue",main="Plot of 1st 2 principle components")
 
-TregData2=TregData[,c(1,2)]
-rownames(TregData2) <- NULL
-TregData=TregData2
-plot(TregData,cex=0.9,col="blue",main="Plot of 1st 2 principle components")
+
  
