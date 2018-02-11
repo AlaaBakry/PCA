@@ -1,12 +1,12 @@
 # this is written on R version 3.4.3 
 #PCA is done without transformation in this script as we need to keep unwanted variation "not sure" to analyze seperately as it stabilizes variance.
 # reading the data
-install.packages("readxl")
+#install.packages("readxl")
 library(readxl)
-read_excel
 setwd("C:/Users/amr01007778867/Desktop")
 TregData  <- read.delim("t_reg_only.txt")
 head(TregData)
+metadata<- read_excel(path= "metadata_treg.xlsx", sheet = 1)
 #in PCA We can Obtain the Eigenvectors and Eigenvalues from the covariance matrix (eigenvalue decomposition),or perform SVD like here
 princo <- prcomp(TregData, center=TRUE, scale=FALSE)
 summary(princo)
@@ -24,4 +24,4 @@ trans<- t(princo)
 FPCT <- trans[,1]
 # test the correlation between FPCT and data
 #install.packages("ggpubr")
-data <- read.csv("metadata_treg.xlsx")
+
