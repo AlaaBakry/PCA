@@ -1,5 +1,6 @@
 # this is written on R version 3.4.3 
 #PCA is done without transformation in this script as we need to keep unwanted variation "not sure" to analyze seperately as it stabilizes variance.
+#install.packages("ggpubr")
 # reading the data
 #install.packages("readxl")
 library(readxl)
@@ -7,6 +8,7 @@ setwd("C:/Users/amr01007778867/Desktop")
 TregData  <- read.delim("t_reg_only.txt")
 head(TregData)
 metadata<- read_excel(path= "metadata_treg.xlsx", sheet = 1)
+batchnum <- metadata[,4]
 #in PCA We can Obtain the Eigenvectors and Eigenvalues from the covariance matrix (eigenvalue decomposition),or perform SVD like here
 princo <- prcomp(TregData, center=TRUE, scale=FALSE)
 summary(princo)
@@ -17,11 +19,9 @@ princo$sdev ^ 2
 screeplot(princo , main="Scree Plot", xlab="Components")
 screeplot(princo, main="Scree Plot", type="line" )
 boxplot(princo$x)
-
 # construct the projection matrix W from  the first principle component
-#FPC <- princo$x[,1]
 trans<- t(princo)
 FPCT <- trans[,1]
 # test the correlation between FPCT and data
-#install.packages("ggpubr")
-
+batchnum ["PC"] <- FPCT
+# how to make it identify the batch of each sample as a value
