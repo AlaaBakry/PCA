@@ -1,10 +1,10 @@
 # this is written on R version 3.4.3 
 #PCA is done without transformation in this script as we need to keep unwanted variation "not sure" to analyze seperately as it stabilizes variance.
 #install.packages("ggpubr")
-# reading the data
 #install.packages("readxl")
+# reading the data
 library(readxl)
-setwd("C:/Users/amr01007778867/Desktop")
+setwd("C:/Users/Admin/Desktop")
 TregData  <- read.delim("t_reg_only.txt")
 head(TregData)
 metadata<- read_excel(path= "metadata_treg.xlsx", sheet = 1)
@@ -19,9 +19,11 @@ princo$sdev ^ 2
 screeplot(princo , main="Scree Plot", xlab="Components")
 screeplot(princo, main="Scree Plot", type="line" )
 boxplot(princo$x)
-# construct the projection matrix W from  the first principle component
-trans<- t(princo)
-FPCT <- trans[,1]
-# test the correlation between FPCT and data
-batchnum ["PC"] <- FPCT
-# how to make it identify the batch of each sample as a value
+y<- princo$rotation
+trans<- t(princo$rotation) #not sure
+#now the eigenvectors are the rows of trans as they were columns of rotation
+#FPCT <- trans[,1]; batchnum ["PC"] <- FPCT; no need to get the first PC till assuring of the highest correlation 
+# test the correlation between batchnumber and PCs of data to know
+x<- batchnum[1];#repeated 
+cor(x, trans, method = c("pearson", "kendall", "spearman"))
+#E:the highest correlation between sample GSM998923.CEL and batch number 25 / if not transposed Pc # 7 has the highest correlation with batch #      
