@@ -10,7 +10,8 @@ TregData  <- read.delim("t_reg_only.txt")
 TregData <- t(TregData)
 #View(TregData)
 metadata<- read_excel(path= "metadata_treg.xlsx", sheet = 1)
-batchnum <- metadata[,4]
+batchnum <- metadata[,4] #is x
+
 #in PCA We can Obtain the Eigenvectors and Eigenvalues from the covariance matrix (eigenvalue decomposition),or perform SVD like here
 princo <- prcomp(TregData, center=TRUE, scale=FALSE)
 library(factoextra)
@@ -39,13 +40,39 @@ princo$sdev ^ 2
 screeplot(princo , main="Scree Plot", xlab="Components")
 #screeplot(princo, main="Scree Plot", type="line" )
 boxplot(princo$x)
-y<- princo$rotation
-trans<- t(princo$rotation) 
+i=15
+y<- princo$x[,i] # the columns of rotation are the eigenvectors
+#View(y)
+#trans<- t(princo$rotation) 
 #FPCT <- trans[,1]; batchnum ["PC"] <- FPCT; no need to get the first PC till assuring of the highest correlation 
 # test the correlation between batchnumber and PCs of data to know
-x<- batchnum[1]; 
-cor(x,t(y), method = c(  "kendall"))
-#E:the highest correlation between sample GSM998923.CEL and batch number 25 / if not transposed Pc # 7 has the highest correlation with batch #      
+x1<- c(5,5,5,5,5,5,15,15) ;
+x2<- c(17,17,17,20,21,24,24,24)
+x3<- c(25,25,32,32,32,32,32,32)
+x4 <-c(47,47,48,48,48,55,55,55)
+x<- c(x1, x2, x3, x4)
+#cor(x,t(y), method = c(  "kendall"))
+
+anov1 = aov(x ~ y)
+summary(anov1)
+#pvalue = 0.638 so there is a correlation
+#      
 PCs_minusfirst2<-princo$x[,-c(1,2)]
-#View(PCs_minusfirst2)
+View(PCs_minusfirst2)
+i=1
+y<- PCs_minusfirst2[,i] # the columns of rotation are the eigenvectors
+View(y)
+anov2 = aov(x ~ y)
+summary(anov2)
+#pvalue =0.357
 boxplot(PCs_minusfirst2)
+PCs_minus_fir_2and4_5<-PCs_minusfirst2[,-c(2,3)]
+boxplot(PCs_minus_fir_2and4_5)
+i=1
+y<-PCs_minus_fir_2and4_5 [,i] # the columns of rotation are the eigenvectors
+View(y)
+anov2 = aov(x ~ y)
+summary(anov2)
+View(princo$x)
+# PCs_minus_1_2and4_5_6_7<- PCs_minus_fir_2and4_5[,-c(1,2)]
+# boxplot(PCs_minus_1_2and4_5_6_7)
